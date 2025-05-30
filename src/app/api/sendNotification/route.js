@@ -30,7 +30,6 @@ export async function POST(req) {
         title,
         body,
         image,
-        icon: image, // Fallback icon
       },
       data: {
         click_action,
