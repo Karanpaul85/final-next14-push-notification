@@ -29,8 +29,33 @@ messaging.onBackgroundMessage(function (payload) {
   });
 });
 
+// self.addEventListener("notificationclick", function (event) {
+//   event.notification.close();
+//   const urlToOpen = event.notification.data?.url || "/";
+//   event.waitUntil(clients.openWindow(urlToOpen));
+// });
+// Handle click
 self.addEventListener("notificationclick", function (event) {
+  console.log("[firebase-messaging-sw.js] Notification click received.");
+
   event.notification.close();
-  const urlToOpen = event.notification.data?.url || "/";
-  event.waitUntil(clients.openWindow(urlToOpen));
+
+  const click_action = event.notification.data?.click_action;
+
+  if (click_action) {
+    event.waitUntil(
+      clients
+        .matchAll({ type: "window", includeUncontrolled: true })
+        .then((clientList) => {
+          for (const client of clientList) {
+            if (client.url === click_action && "focus" in client) {
+              return client.focus();
+            }
+          }
+          if (clients.openWindow) {
+            return clients.openWindow(click_action);
+          }
+        })
+    );
+  }
 });
