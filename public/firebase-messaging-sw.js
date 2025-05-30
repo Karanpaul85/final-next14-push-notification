@@ -51,7 +51,7 @@ self.addEventListener("push", function (event) {
   const options = {
     body: data.body,
     icon: data.image || "/logo.png",
-    // image: data.image,
+    image: data.image,
     data: {
       click_action: data.click_action || "https://example.com",
     },
