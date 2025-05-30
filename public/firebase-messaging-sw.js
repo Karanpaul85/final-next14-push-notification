@@ -17,47 +17,48 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// messaging.onBackgroundMessage(function (payload) {
-//   console.log(
-//     "[firebase-messaging-sw.js] Received background message ",
-//     payload
-//   );
-//   const notification = payload.notification || {};
-//   const data = payload.data || {};
+messaging.onBackgroundMessage(function (payload) {
+  console.log(
+    "[firebase-messaging-sw.js] Received background message ",
+    payload
+  );
+  const notification = payload.notification || {};
+  const data = payload.data || {};
 
-//   const notificationOptions = {
-//     body: notification.body,
-//     icon: notification.icon || "/logo.png",
-//     image: notification.image || data.image, // fallback to data.image
-//     data: {
-//       click_action: data.click_action || "https://example.com", // ensure this is named `click_action`
-//     },
-//   };
+  const notificationOptions = {
+    body: notification.body,
+    icon: notification.icon || "/logo.png",
+    image: notification.image || data.image,
+    tag: "general-notification", // fallback to data.image
+    data: {
+      click_action: data.click_action || "https://example.com", // ensure this is named `click_action`
+    },
+  };
 
-//   self.registration.showNotification(notification.title, notificationOptions);
-// });
+  self.registration.showNotification(notification.title, notificationOptions);
+});
 
 // self.addEventListener("install", function (event) {
 //   console.log("Service Worker installed");
 // });
 
-self.addEventListener("push", function (event) {
-  const payload = event.data?.json();
+// self.addEventListener("push", function (event) {
+//   const payload = event.data?.json();
 
-  const data = payload.data || {};
-  const title = data.title || "Default Title";
-  const options = {
-    body: data.body,
-    icon: data.image || "/logo.png",
-    image: data.image,
-    tag: "general-notification",
-    data: {
-      click_action: data.click_action || "https://example.com",
-    },
-  };
+//   const data = payload.data || {};
+//   const title = data.title || "Default Title";
+//   const options = {
+//     body: data.body,
+//     icon: data.image || "/logo.png",
+//     image: data.image,
+//     tag: "general-notification",
+//     data: {
+//       click_action: data.click_action || "https://example.com",
+//     },
+//   };
 
-  event.waitUntil(self.registration.showNotification(title, options));
-});
+//   event.waitUntil(self.registration.showNotification(title, options));
+// });
 
 self.addEventListener("notificationclick", function (event) {
   event.notification.close();
