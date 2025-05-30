@@ -27,21 +27,41 @@ export default function PushNotificationButton() {
         console.warn("No FCM token available");
       }
 
+      // onMessage(messaging, (payload) => {
+      //   const { title, body, image } = payload.notification;
+      //   const click_action = payload.data?.click_action;
+
+      //   const notification = new Notification(title, {
+      //     body,
+      //     icon: image || "/default-icon.png",
+      //   });
+
+      //   notification.onclick = (event) => {
+      //     event.preventDefault();
+      //     if (click_action) {
+      //       window.open(click_action, "_blank");
+      //     }
+      //   };
+      // });
       onMessage(messaging, (payload) => {
+        console.log("Foreground message received:", payload);
         const { title, body, image } = payload.notification;
         const click_action = payload.data?.click_action;
 
-        const notification = new Notification(title, {
-          body,
-          icon: image || "/default-icon.png",
-        });
-
-        notification.onclick = (event) => {
-          event.preventDefault();
-          if (click_action) {
-            window.open(click_action, "_blank");
+        navigator.serviceWorker.getRegistration().then((reg) => {
+          if (reg) {
+            reg.showNotification(title, {
+              body,
+              icon: image || "/default-icon.png",
+              image,
+              data: {
+                click_action: click_action || "/",
+              },
+            });
+          } else {
+            console.warn("Service worker not registered");
           }
-        };
+        });
       });
     }
   };
