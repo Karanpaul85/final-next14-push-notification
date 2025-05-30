@@ -35,6 +35,8 @@ export async function POST(req) {
       data: {
         click_action,
         image,
+        body,
+        title,
       },
       webpush: {
         notification: {

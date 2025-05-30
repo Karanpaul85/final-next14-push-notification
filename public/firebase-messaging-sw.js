@@ -18,68 +18,50 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 // messaging.onBackgroundMessage(function (payload) {
-//   console.log("Background message:", payload);
-//   self.registration.showNotification(payload.notification.title, {
-//     body: payload.notification.body,
+//   console.log(
+//     "[firebase-messaging-sw.js] Received background message ",
+//     payload
+//   );
+//   const notification = payload.notification || {};
+//   const data = payload.data || {};
+
+//   const notificationOptions = {
+//     body: notification.body,
 //     icon: notification.icon || "/logo.png",
-//     image: notification.image || data.image,
+//     image: notification.image || data.image, // fallback to data.image
 //     data: {
-//       url: data.click_action || "https://example.com",
+//       click_action: data.click_action || "https://example.com", // ensure this is named `click_action`
 //     },
-//   });
+//   };
+
+//   self.registration.showNotification(notification.title, notificationOptions);
 // });
-messaging.onBackgroundMessage(function (payload) {
-  console.log("Background message:", payload);
 
-  const notification = payload.notification || {};
+// self.addEventListener("install", function (event) {
+//   console.log("Service Worker installed");
+// });
+
+self.addEventListener("push", function (event) {
+  const payload = event.data?.json();
+
+  console.log("[firebase-messaging-sw.js] Push received", payload);
+
   const data = payload.data || {};
-
-  const notificationOptions = {
-    body: notification.body,
-    icon: notification.icon || "/logo.png",
-    image: notification.image || data.image, // fallback to data.image
+  const title = data.title || "Default Title";
+  const options = {
+    body: data.body,
+    icon: data.icon || "/logo.png",
+    image: data.image,
     data: {
-      click_action: data.click_action || "https://example.com", // ensure this is named `click_action`
+      click_action: data.click_action || "https://example.com",
     },
   };
 
-  self.registration.showNotification(notification.title, notificationOptions);
+  event.waitUntil(self.registration.showNotification(title, options));
 });
 
-// self.addEventListener("notificationclick", function (event) {
-//   event.notification.close();
-//   const urlToOpen = event.notification.data?.url || "/";
-//   event.waitUntil(clients.openWindow(urlToOpen));
-// });
-// Handle click
-// self.addEventListener("notificationclick", function (event) {
-//   console.log("[firebase-messaging-sw.js] Notification click received.");
-
-//   event.notification.close();
-
-//   const click_action = event.notification.data?.click_action;
-
-//   if (click_action) {
-//     event.waitUntil(
-//       clients
-//         .matchAll({ type: "window", includeUncontrolled: true })
-//         .then((clientList) => {
-//           for (const client of clientList) {
-//             if (client.url === click_action && "focus" in client) {
-//               return client.focus();
-//             }
-//           }
-//           if (clients.openWindow) {
-//             return clients.openWindow(click_action);
-//           }
-//         })
-//     );
-//   }
-// });
 self.addEventListener("notificationclick", function (event) {
-  console.log("[firebase-messaging-sw.js] Notification click received.");
   event.notification.close();
-
   const click_action = event.notification.data?.click_action;
 
   if (click_action) {
