@@ -44,14 +44,13 @@ const messaging = firebase.messaging();
 self.addEventListener("push", function (event) {
   const payload = event.data?.json();
 
-  console.log("[firebase-messaging-sw.js] Push received", payload);
-
   const data = payload.data || {};
   const title = data.title || "Default Title";
   const options = {
     body: data.body,
     icon: data.image || "/logo.png",
     image: data.image,
+    tag: "general-notification",
     data: {
       click_action: data.click_action || "https://example.com",
     },
