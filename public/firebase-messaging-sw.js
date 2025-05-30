@@ -50,8 +50,8 @@ self.addEventListener("push", function (event) {
   const title = data.title || "Default Title";
   const options = {
     body: data.body,
-    icon: data.icon || "/logo.png",
-    image: data.image,
+    icon: data.image || "/logo.png",
+    // image: data.image,
     data: {
       click_action: data.click_action || "https://example.com",
     },

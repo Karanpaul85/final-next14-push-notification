@@ -53,7 +53,7 @@ export default function PushNotificationButton() {
             reg.showNotification(title, {
               body,
               icon: image || "/window.svg",
-              image,
+              // image,
               data: {
                 click_action: click_action || "/",
               },
