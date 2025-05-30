@@ -26,11 +26,12 @@ export async function POST(req) {
   try {
     const message = {
       token,
-      notification: {
-        title,
-        body,
-        image,
-      },
+      // notification: {
+      //   title,
+      //   body,
+      //   image,
+      //   // icon: image || "/favicon.ico", // Fallback icon
+      // },
       data: {
         click_action,
         image,
