@@ -100,7 +100,7 @@ export default function PushNotificationButton() {
         title: "Hello KP Next.js!",
         body: "This is a push notification.",
         image:
-          "https://www.fnp.com/assets/images/custom/alpha-signature-icons/fathers-day/Personalised_Desk_528x528.jpg",
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Altja_j%C3%B5gi_Lahemaal.jpg/330px-Altja_j%C3%B5gi_Lahemaal.jpg",
         click_action: "https://www.google.com",
       }),
     });
