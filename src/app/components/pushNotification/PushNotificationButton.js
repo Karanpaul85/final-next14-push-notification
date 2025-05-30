@@ -88,7 +88,12 @@ export default function PushNotificationButton() {
     const data = await res.json();
     console.log("Notification sent:", data);
   };
-
+  const handleCopy = () => {
+    navigator.clipboard
+      .writeText(token)
+      .then(() => alert("Token copied to clipboard!"))
+      .catch((err) => console.error("Failed to copy: ", err));
+  };
   return (
     <div>
       {token ? (
@@ -108,6 +113,10 @@ export default function PushNotificationButton() {
           Allow Notification
         </button>
       )}
+
+      <div onClick={handleCopy} style={{ marginTop: "30px" }}>
+        {token}
+      </div>
     </div>
   );
 }
