@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { messaging, getToken, onMessage } from "./../../lib/firebase"; // Adjust the import path as necessary
+import { messaging, getToken } from "./../../lib/firebase"; // Adjust the import path as necessary
+import style from "./PushNotificationButton.module.css"; // Adjust the import path as necessary
 
 // const VAPID_KEY =
 // "BEWVewYC3Vja2sC3qQ12-JYZubW9p0797eHaiHLZUQixgCQQ_N-oKLnAbHmcuHIpdgwUc_FAY-d5EtwP7QvmVHg";
@@ -104,7 +105,7 @@ export default function PushNotificationButton() {
         <button
           onClick={sendNotification}
           disabled={!token}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className={style?.button}
         >
           Send Push Notification
         </button>
@@ -112,7 +113,7 @@ export default function PushNotificationButton() {
         <button
           onClick={requestAndInit}
           disabled={token}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className={style?.button}
         >
           Allow Notification
         </button>

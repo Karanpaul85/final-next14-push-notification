@@ -27,11 +27,13 @@ messaging.onBackgroundMessage(function (payload) {
 
   const notificationOptions = {
     body: notification.body,
-    icon: notification.icon || "/next.svg",
+    icon: notification.icon || "/images.jpeg",
     image: notification.image || data.image,
     // tag: "general-notification", // fallback to data.image
     data: {
-      click_action: data.click_action || "https://example.com", // ensure this is named `click_action`
+      click_action:
+        data.click_action ||
+        "https://final-next14-push-notification.vercel.app/", // ensure this is named `click_action`
     },
   };
 
