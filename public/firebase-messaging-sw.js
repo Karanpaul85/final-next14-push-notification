@@ -27,7 +27,7 @@ messaging.onBackgroundMessage(function (payload) {
 
   const notificationOptions = {
     body: notification.body,
-    icon: notification.icon || "/logo.png",
+    icon: notification.icon || "/next.svg",
     image: notification.image || data.image,
     // tag: "general-notification", // fallback to data.image
     data: {
