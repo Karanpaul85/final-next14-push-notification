@@ -29,7 +29,7 @@ messaging.onBackgroundMessage(function (payload) {
     body: notification.body,
     icon: notification.icon || "/logo.png",
     image: notification.image || data.image,
-    tag: "general-notification", // fallback to data.image
+    // tag: "general-notification", // fallback to data.image
     data: {
       click_action: data.click_action || "https://example.com", // ensure this is named `click_action`
     },
